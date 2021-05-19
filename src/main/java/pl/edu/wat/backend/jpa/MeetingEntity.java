@@ -8,6 +8,7 @@ import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +25,8 @@ public class MeetingEntity {
     private Date date;
     private String description;
     private String place;
-    @ElementCollection
-    Set<InvitationEntity> usersInvited;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "id")
+    Set<InvitationEntity> usersInvited ;
     @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity organizer;
 }

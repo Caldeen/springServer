@@ -1,6 +1,7 @@
 package pl.edu.wat.backend.api;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.edu.wat.backend.jpa.InvitationEntity;
@@ -15,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Meeting {
     private int id;
     private String name;

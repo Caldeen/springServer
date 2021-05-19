@@ -18,5 +18,9 @@ public class InvitationEntity {
     private int id;
     @Enumerated(value = EnumType.STRING)
     private StatusEnum status;
+    @ManyToOne
+    private MeetingEntity meeting;
+    @ManyToOne
+    private UserEntity userInvited;
 
 }
