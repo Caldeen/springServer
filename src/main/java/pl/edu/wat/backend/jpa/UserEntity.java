@@ -5,10 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -19,9 +19,20 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String first_name;
-    private String last_name;
+    @Column(unique = true)
+    private String username;
+    private String firstName;
+    private String lastName;
     private String password;
-    private int phone_number;
+    private Date birthDate;
+    private int phoneNumber;
+    private UUID token;
+    private Boolean loggedIn ;
+    @Column(unique = true)
     private String email;
+    @OneToMany(mappedBy = "organizer")
+    List<MeetingEntity> meetings;
+    @OneToMany(mappedBy = "userInvited")
+    List<InvitationEntity> usersInvitations;
+
 }
