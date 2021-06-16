@@ -9,6 +9,7 @@ import pl.edu.wat.backend.jpa.UserEntity;
 
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -20,7 +21,7 @@ import java.util.Set;
 public class Meeting {
     private int id;
     private String name;
-    private Date date;
+    private LocalDateTime date;
     private String description;
     private String place;
     Set<InvitationEntity> usersInvited;

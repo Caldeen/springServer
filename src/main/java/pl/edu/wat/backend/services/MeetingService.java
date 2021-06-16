@@ -12,4 +12,6 @@ public interface MeetingService {
     List<Meeting> getAllMeetings();
 
     List<MeetingResponse> getUsersMeetings(UUID token);
+
+    void add(MeetingResponse meetingResponse, UUID token);
 }

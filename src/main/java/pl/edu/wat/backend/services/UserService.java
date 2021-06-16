@@ -13,8 +13,11 @@ public interface UserService {
 
     User findUserByToken(UUID token);
     User tryLogin(String username, String password);
+    UserEntity findUserEntByToken(UUID token);
 
     UUID handleLogin(User user);
 
     void logout(User user);
+
+    User findUserByUsername(String username);
 }

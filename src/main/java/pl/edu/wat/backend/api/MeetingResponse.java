@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import pl.edu.wat.backend.jpa.InvitationEntity;
 import pl.edu.wat.backend.jpa.UserEntity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ import java.util.Set;
 public class MeetingResponse {
     private int id;
     private String name;
-    private Date date;
+    private String date;
     private String description;
     private String place;
 }

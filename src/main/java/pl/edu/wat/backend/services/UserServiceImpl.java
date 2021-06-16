@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository repository;
     @Override
     public void add(User user) {
+        if(findUserByUsername(user.getUsername())!=null)
+            return;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
         String date = user.getBirthDate();
         Date dateToAdd = null;
@@ -83,6 +85,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity findUserEntByToken(UUID token) {
+        UserEntity userEnt = StreamSupport.stream(repository.findAll().spliterator(), false)
+                .filter(userEntity ->userEntity.getToken()!=null&& userEntity.getToken().equals(token))
+                .findAny()
+                .orElse(null);
+        return userEnt;
+    }
+
+    @Override
     public UUID handleLogin(User user) {
         UserEntity userEntity = repository.findById(user.getId()).get();
         UUID token = UUID.randomUUID();
@@ -98,6 +109,15 @@ public class UserServiceImpl implements UserService {
         userEntity.setLoggedIn(false);
         userEntity.setToken(null);
         repository.save(userEntity);
+    }
+    @Override
+    public User findUserByUsername(String username) {
+        UserEntity userEnt = StreamSupport.stream(repository.findAll().spliterator(), false)
+                .filter(userEntity -> userEntity.getUsername().equals(username))
+                .findAny()
+                .orElse(null);
+
+        return userEntityToUser(userEnt);
     }
     private User userEntityToUser(UserEntity userEntity) {
         if (userEntity == null)
@@ -115,4 +135,5 @@ public class UserServiceImpl implements UserService {
                 .usersInvitations(userEntity.getUsersInvitations())
                 .build();
     }
+
 }

@@ -16,14 +16,16 @@ public class MeetingController {
      private MeetingService service;
 
 
-    @GetMapping("/spotkania")
-    public ResponseEntity<List<Meeting>> getAllMeetings() {
-        List<Meeting>  meetings= service.getAllMeetings();
-        return new ResponseEntity<>(meetings, HttpStatus.OK);
-    }@GetMapping("/meetings")
+
+    @GetMapping("/meetings")
     public ResponseEntity<List<MeetingResponse>> getUsersMeetings(@RequestHeader("SESSION") UUID token) {
         List<MeetingResponse>  meetings= service.getUsersMeetings(token);
         return new ResponseEntity<>(meetings, HttpStatus.OK);
+    }@PostMapping("/addMeeting")
+    public ResponseEntity<String> addMeeting(@RequestHeader("SESSION") UUID token,
+                                             @RequestBody MeetingResponse meetingResponse) {
+        service.add(meetingResponse,token);
+        return new ResponseEntity<>("added", HttpStatus.OK);
     }
     @DeleteMapping("/delete-meeting/{meetingId}")
     public ResponseEntity<String> deleteMeeting(@RequestHeader("SESSION") UUID token,

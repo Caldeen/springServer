@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.apache.catalina.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,7 +23,7 @@ public class MeetingEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    private Date date;
+    private LocalDateTime date;
     private String description;
     private String place;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "meeting")
