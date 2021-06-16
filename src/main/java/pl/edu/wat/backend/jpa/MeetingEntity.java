@@ -27,6 +27,6 @@ public class MeetingEntity {
     private String place;
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "meeting")
     Set<InvitationEntity> usersInvited ;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     private UserEntity organizer;
 }

@@ -3,10 +3,13 @@ package pl.edu.wat.backend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.edu.wat.backend.api.Meeting;
+import pl.edu.wat.backend.api.MeetingResponse;
+import pl.edu.wat.backend.api.User;
 import pl.edu.wat.backend.jpa.MeetingEntity;
 import pl.edu.wat.backend.repositories.MeetingRepository;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -14,6 +17,8 @@ import java.util.stream.StreamSupport;
 public class MeetingServiceImpl implements MeetingService {
     @Autowired
     private MeetingRepository repository;
+    @Autowired
+    private UserService userService;
     @Override
     public void add(Meeting meeting) {
         MeetingEntity entity = MeetingEntity.builder()
@@ -35,6 +40,16 @@ public class MeetingServiceImpl implements MeetingService {
                         meetingEntity.getName(), meetingEntity.getDate(),meetingEntity.getDescription(),
                         meetingEntity.getPlace(), meetingEntity.getUsersInvited(),
                         meetingEntity.getOrganizer()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<MeetingResponse> getUsersMeetings(UUID token) {
+        User user = userService.findUserByToken(token);
+        return user.getMeetings().stream()
+                .map(meetingEntity -> new MeetingResponse(meetingEntity.getId(),
+                        meetingEntity.getName(), meetingEntity.getDate(),meetingEntity.getDescription(),
+                        meetingEntity.getPlace()))
                 .collect(Collectors.toList());
     }
 }
